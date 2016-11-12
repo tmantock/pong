@@ -55,6 +55,22 @@ def checkEdgeCollision(ball, ballDirX, ballDirY):
         ballDirX = ballDirX * -1
     return ballDirX, ballDirY
 
+#Artificial Intelligence of computer player       
+def artificialIntelligence(ball, ballDirX, paddle2):
+    #If ball is moving away from paddle, center bat
+    if ballDirX == -1:
+        if paddle2.centery < (WINDOWHEIGHT/2):
+            paddle2.y += 1
+        elif paddle2.centery > (WINDOWHEIGHT/2):
+            paddle2.y -= 1
+    #if ball moving towards bat, track its movement. 
+    elif ballDirX == 1:
+        if paddle2.centery < ball.centery:
+            paddle2.y += 1
+        else:
+            paddle2.y -=1
+    return paddle2
+
 
 #main function for game
 def main():
@@ -106,6 +122,7 @@ def main():
 
         ball = moveBall(ball, ballDirX, ballDirY)
         ballDirX, ballDirY = checkEdgeCollision(ball, ballDirX, ballDirY)
+        paddle2 = artificialIntelligence (ball, ballDirX, paddle2)
         
         pygame.display.update()
         FPSCLOCK.tick(FPS)
