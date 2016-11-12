@@ -55,6 +55,14 @@ def checkEdgeCollision(ball, ballDirX, ballDirY):
         ballDirX = ballDirX * -1
     return ballDirX, ballDirY
 
+#Checks is the ball has hit a paddle, and 'bounces' ball off it.     
+def checkHitBall(ball, paddle1, paddle2, ballDirX):
+    if ballDirX == -1 and paddle1.right == ball.left and paddle1.top < ball.top and paddle1.bottom > ball.bottom:
+        return -1
+    elif ballDirX == 1 and paddle2.left == ball.right and paddle2.top < ball.top and paddle2.bottom > ball.bottom:
+        return -1
+    else: return 1
+
 #Artificial Intelligence of computer player       
 def artificialIntelligence(ball, ballDirX, paddle2):
     #If ball is moving away from paddle, center bat
@@ -122,6 +130,7 @@ def main():
 
         ball = moveBall(ball, ballDirX, ballDirY)
         ballDirX, ballDirY = checkEdgeCollision(ball, ballDirX, ballDirY)
+        ballDirX = ballDirX * checkHitBall(ball, paddle1, paddle2, ballDirX)
         paddle2 = artificialIntelligence (ball, ballDirX, paddle2)
         
         pygame.display.update()
