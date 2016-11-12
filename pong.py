@@ -46,6 +46,16 @@ def moveBall(ball, ballDirX, ballDirY):
     ball.y += ballDirY
     return ball
 
+#Checks for a collision with a wall, and 'bounces' ball off it.
+#Returns new direction
+def checkEdgeCollision(ball, ballDirX, ballDirY):
+    if ball.top == (LINETHICKNESS) or ball.bottom == (WINDOWHEIGHT - LINETHICKNESS):
+        ballDirY = ballDirY * -1
+    if ball.left == (LINETHICKNESS) or ball.right == (WINDOWWIDTH - LINETHICKNESS):
+        ballDirX = ballDirX * -1
+    return ballDirX, ballDirY
+
+
 #main function for game
 def main():
     pygame.init()
@@ -89,6 +99,7 @@ def main():
         drawBall(ball)
 
         ball = moveBall(ball, ballDirX, ballDirY)
+        ballDirX, ballDirY = checkEdgeCollision(ball, ballDirX, ballDirY)
         
         pygame.display.update()
         FPSCLOCK.tick(FPS)
