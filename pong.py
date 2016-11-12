@@ -87,11 +87,17 @@ def main():
     drawPaddle(paddle2)
     drawBall(ball)
 
+    pygame.mouse.set_visible(0) # make cursor invisible
+
     while True: #main game loop
         for event in pygame.event.get():
             if event.type == QUIT:
                 pygame.quit()
                 sys.exit()
+            # mouse movement commands
+            elif event.type == MOUSEMOTION:
+                mousex, mousey = event.pos
+                paddle1.y = mousey
 
         drawArena()
         drawPaddle(paddle1)
